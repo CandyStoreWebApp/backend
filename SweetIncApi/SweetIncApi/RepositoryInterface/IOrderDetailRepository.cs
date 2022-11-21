@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 namespace SweetIncApi.RepositoryInterface
 {
-    public interface IOrderDetailRepository : IBaseRepository<Orderdetail>
+    public interface IOrderDetailRepository : IBaseRepository<OrderDetail>
     {
-        public List<Orderdetail> GetByOrderId(int id);
+        public List<OrderDetail> GetByOrderId(int id);
     }
 }

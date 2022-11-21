@@ -10,6 +10,9 @@ namespace SweetIncApi.BusinessModels
         public int BoxId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+        public int Price { get; set; }
+        public string ProductName { get; set; }
+
         public virtual Box Box { get; set; }
         public virtual Product Product { get; set; }
     }

@@ -57,7 +57,7 @@ namespace SweetIncApi
             services.AddScoped<IBoxProductRepository, BoxProductRepository>();
             services.AddScoped<IBoxPatternRepository, BoxPatternRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
-            services.AddScoped<ICatagoryRepository, CatagoryRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOriginRepository, OriginRepository>();

@@ -141,7 +141,7 @@ namespace SweetIncApi.Migrations
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("SweetIncApi.BusinessModels.Catagory", b =>
+            modelBuilder.Entity("SweetIncApi.BusinessModels.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -156,7 +156,7 @@ namespace SweetIncApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Catagory");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("SweetIncApi.BusinessModels.Order", b =>
@@ -244,7 +244,7 @@ namespace SweetIncApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("brandId");
 
-                    b.Property<int>("CatagoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasColumnName("catagoryId");
 
@@ -275,7 +275,7 @@ namespace SweetIncApi.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("CatagoryId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Product");
                 });
@@ -419,15 +419,15 @@ namespace SweetIncApi.Migrations
                         .HasConstraintName("FK_Product_Brand")
                         .IsRequired();
 
-                    b.HasOne("SweetIncApi.BusinessModels.Catagory", "Catagory")
+                    b.HasOne("SweetIncApi.BusinessModels.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CatagoryId")
-                        .HasConstraintName("FK_Product_Catagory")
+                        .HasForeignKey("CategoryId")
+                        .HasConstraintName("FK_Product_Category")
                         .IsRequired();
 
                     b.Navigation("Brand");
 
-                    b.Navigation("Catagory");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("SweetIncApi.BusinessModels.User", b =>
@@ -457,7 +457,7 @@ namespace SweetIncApi.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("SweetIncApi.BusinessModels.Catagory", b =>
+            modelBuilder.Entity("SweetIncApi.BusinessModels.Category", b =>
                 {
                     b.Navigation("Products");
                 });

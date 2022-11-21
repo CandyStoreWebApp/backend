@@ -4,7 +4,7 @@ using SweetIncApi.Models.DTO.Box;
 using SweetIncApi.Models.DTO.BoxPattern;
 using SweetIncApi.Models.DTO.BoxProduct;
 using SweetIncApi.Models.DTO.Brand;
-using SweetIncApi.Models.DTO.Catagory;
+using SweetIncApi.Models.DTO.Category;
 using SweetIncApi.Models.DTO.Order;
 using SweetIncApi.Models.DTO.OrderDetail;
 using SweetIncApi.Models.DTO.Origin;
@@ -22,7 +22,7 @@ namespace SweetIncApi.Models
             CreateBoxPatternMap();
             CreateBoxProductMap();
             CreateBrandMap();
-            CreateCatagoryMap();
+            CreateCategoryMap();
             CreateOrderMap();
             CreateOrderDetailMap();
             CreateOriginMap();
@@ -50,10 +50,10 @@ namespace SweetIncApi.Models
             CreateMap<BrandVM, Brand>().ReverseMap();
             CreateMap<UpdateBrandVM, Brand>().ReverseMap();
         }
-        private void CreateCatagoryMap()
+        private void CreateCategoryMap()
         {
-            CreateMap<CatagoryVM, Catagory>().ReverseMap();
-            CreateMap<UpdateCatagoryVM, Catagory>().ReverseMap();
+            CreateMap<CategoryVM, Category>().ReverseMap();
+            CreateMap<UpdateCategoryVM, Category>().ReverseMap();
         }
         private void CreateOrderMap()
         {
@@ -62,7 +62,7 @@ namespace SweetIncApi.Models
         }
         private void CreateOrderDetailMap()
         {
-            CreateMap<OrderDetailVM, Orderdetail>().ReverseMap();
+            CreateMap<OrderDetailVM, OrderDetail>().ReverseMap();
         }
         private void CreateOriginMap()
         {

@@ -16,7 +16,7 @@ using SweetIncApi.RepositoryInterface;
 
 namespace SweetIncApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrderdetailsController : ControllerBase
     {
@@ -75,7 +75,7 @@ namespace SweetIncApi.Controllers
         [HttpPut("{orderId}/{boxId}")]
         public IActionResult Update(int orderId, int boxId, OrderDetailVM orderdetailVM)
         {
-            if (boxId != orderdetailVM.BoxId || orderId != orderdetailVM.id)
+            if (boxId != orderdetailVM.BoxId || orderId != orderdetailVM.OrderId)
             {
                 return BadRequest();
             }
@@ -83,7 +83,7 @@ namespace SweetIncApi.Controllers
             try
             {
 
-                var orderDetail = _mapper.Map<Orderdetail>(orderdetailVM);
+                var orderDetail = _mapper.Map<OrderDetail>(orderdetailVM);
                 var result = _orderDetailRepository.Update(orderDetail);
                 if (result != null)
                 {
@@ -105,7 +105,7 @@ namespace SweetIncApi.Controllers
         [HttpPost]
         public IActionResult Add(OrderDetailVM orderDetailVM)
         {
-            Orderdetail orderDetail = _mapper.Map<Orderdetail>(orderDetailVM);
+            OrderDetail orderDetail = _mapper.Map<OrderDetail>(orderDetailVM);
 
             var order = _orderDetailRepository.Add(orderDetail);
             return Ok(order);

@@ -19,7 +19,7 @@ namespace SweetIncApi.Repository
             return _context.Set<Product>()
                 .Include(x => x.Brand)
                 .Include(x => x.BoxProducts)
-                .Include(x => x.Catagory)
+                .Include(x => x.Category)
                 .AsNoTracking()
                 .ToList();
         }
@@ -29,7 +29,7 @@ namespace SweetIncApi.Repository
             var product = _context.Set<Product>()
                 .Include(x => x.Brand)
                 .Include(x => x.BoxProducts)
-                .Include(x => x.Catagory)
+                .Include(x => x.Category)
                 .AsNoTracking()
                 .ToList()
                 .FirstOrDefault(x => x.Id == id);
@@ -60,7 +60,7 @@ namespace SweetIncApi.Repository
                 .Reference(x => x.Brand)
                 .Load();
             _context.Entry(product)
-                .Reference(x => x.Catagory)
+                .Reference(x => x.Category)
                 .Load();
             return product;
         }

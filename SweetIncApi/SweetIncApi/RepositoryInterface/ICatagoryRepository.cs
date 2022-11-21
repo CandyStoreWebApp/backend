@@ -2,7 +2,7 @@
 
 namespace SweetIncApi.RepositoryInterface
 {
-    public interface ICatagoryRepository : IBaseRepository<Catagory>
+    public interface ICategoryRepository : IBaseRepository<Category>
     {
     }
 }

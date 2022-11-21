@@ -2,6 +2,6 @@
 {
     public class RoleVM
     {
-        public string Role1 { get; set; }
+        public string Name { get; set; }
     }
 }

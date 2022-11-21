@@ -17,6 +17,8 @@ namespace SweetIncApi.BusinessModels
         public string Image { get; set; }
         public bool? Status { get; set; }
         public int Price { get; set; }
+        public int? LowerAge { get; set; }
+        public int? UpperAge { get; set; }
 
         public virtual ICollection<Box> Boxes { get; set; }
     }

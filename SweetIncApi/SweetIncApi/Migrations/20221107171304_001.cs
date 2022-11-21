@@ -24,7 +24,7 @@ namespace SweetIncApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Catagory",
+                name: "Category",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -33,7 +33,7 @@ namespace SweetIncApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Catagory", x => x.id);
+                    table.PrimaryKey("PK_Category", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,9 +153,9 @@ namespace SweetIncApi.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Product_Catagory",
+                        name: "FK_Product_Category",
                         column: x => x.catagoryId,
-                        principalTable: "Catagory",
+                        principalTable: "Category",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -294,7 +294,7 @@ namespace SweetIncApi.Migrations
                 name: "Brand");
 
             migrationBuilder.DropTable(
-                name: "Catagory");
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "BoxPattern");

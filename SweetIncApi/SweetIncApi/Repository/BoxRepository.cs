@@ -18,7 +18,7 @@ namespace SweetIncApi.Repository
         {
             return _context.Set<Box>()
                 .Include(x => x.BoxPattern)
-                .Include(x => x.Orderdetails)
+                .Include(x => x.OrderDetails)
                 .Include(x => x.BoxProducts).ThenInclude(x => x.Product)
                 .AsNoTracking()
                 .ToList();
@@ -29,17 +29,17 @@ namespace SweetIncApi.Repository
         {
             var box = _context.Set<Box>()
                 .Include(x => x.BoxPattern)
-                .Include(x => x.Orderdetails)
+                .Include(x => x.OrderDetails)
                 .Include(x => x.BoxProducts)
                 .ThenInclude(x => x.Product)
                 .ThenInclude(x => x.Brand)
                 .ThenInclude(x => x.Origin)
 
                 .Include(x => x.BoxPattern)
-                .Include(x => x.Orderdetails)
+                .Include(x => x.OrderDetails)
                 .Include(x => x.BoxProducts)
                 .ThenInclude(x => x.Product)
-                .ThenInclude(x => x.Catagory)
+                .ThenInclude(x => x.Category)
                 .AsNoTracking()
                 .ToList()
                 .FirstOrDefault(x => x.Id == id);

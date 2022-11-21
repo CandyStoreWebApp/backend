@@ -14,7 +14,7 @@ namespace SweetIncApi.BusinessModels
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Originid { get; set; }
+        public int OriginId { get; set; }
 
         public virtual Origin Origin { get; set; }
         public virtual ICollection<Product> Products { get; set; }

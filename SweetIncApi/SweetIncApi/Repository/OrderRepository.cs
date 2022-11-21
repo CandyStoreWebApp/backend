@@ -15,7 +15,7 @@ namespace SweetIncApi.Repository
         public new List<Order> GetAll()
         {
             return _context.Set<Order>()
-                .Include(x => x.Orderdetails)
+                .Include(x => x.OrderDetails)
                 .Include(x => x.User)
                 .AsNoTracking()
                 .ToList();
@@ -25,7 +25,7 @@ namespace SweetIncApi.Repository
         public new Order GetByPrimaryKey(int id)
         {
             var order = _context.Orders
-                .Include(x => x.Orderdetails)
+                .Include(x => x.OrderDetails)
                 .Include(x => x.User)
                 .AsNoTracking()
                 .ToList()
@@ -51,7 +51,7 @@ namespace SweetIncApi.Repository
             _context.SaveChanges();
 
             _context.Entry(order)
-                .Collection(x => x.Orderdetails)
+                .Collection(x => x.OrderDetails)
                 .Load();
             _context.Entry(order)
                 .Reference(x => x.User)

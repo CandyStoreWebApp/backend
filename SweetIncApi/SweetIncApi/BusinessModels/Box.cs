@@ -10,7 +10,7 @@ namespace SweetIncApi.BusinessModels
         public Box()
         {
             BoxProducts = new HashSet<BoxProduct>();
-            Orderdetails = new HashSet<Orderdetail>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
         public int Id { get; set; }
@@ -22,6 +22,6 @@ namespace SweetIncApi.BusinessModels
 
         public virtual BoxPattern BoxPattern { get; set; }
         public virtual ICollection<BoxProduct> BoxProducts { get; set; }
-        public virtual ICollection<Orderdetail> Orderdetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

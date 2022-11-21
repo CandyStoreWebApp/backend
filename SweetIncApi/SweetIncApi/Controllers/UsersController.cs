@@ -14,7 +14,7 @@ using SweetIncApi.RepositoryInterface;
 
 namespace SweetIncApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -94,23 +94,23 @@ namespace SweetIncApi.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public IActionResult Register(UserVM user)
-        {
-            #region Validation
-            //var isPassed = ValidationController.Validate(Request, new List<string>
-            //    {
-            //        "Customer",
-            //        "Staff",
-            //        "Admin"
-            //    });
+        //[HttpPost]
+        //public IActionResult Register(UserVM user)
+        //{
+        //    #region Validation
+        //    //var isPassed = ValidationController.Validate(Request, new List<string>
+        //    //    {
+        //    //        "Customer",
+        //    //        "Staff",
+        //    //        "Admin"
+        //    //    });
 
-            //if (!isPassed.Result) return BadRequest();
-            #endregion
+        //    //if (!isPassed.Result) return BadRequest();
+        //    #endregion
 
-            var _user = _userRepository.Register(user);
-            return Ok(_user);
-        }
+        //    var _user = _userRepository.Register(user);
+        //    return Ok(_user);
+        //}
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

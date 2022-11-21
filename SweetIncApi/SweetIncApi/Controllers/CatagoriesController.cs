@@ -7,26 +7,26 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
-using SweetIncApi.Models.DTO.Catagory;
+using SweetIncApi.Models.DTO.Category;
 using SweetIncApi.Repository;
 using SweetIncApi.RepositoryInterface;
 
 namespace SweetIncApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class CatagoriesController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
-        private readonly ICatagoryRepository _catagoryRepository;
+        private readonly ICategoryRepository _catagoryRepository;
         private readonly IMapper _mapper;
 
-        public CatagoriesController(ICatagoryRepository catagoryRepository, IMapper mapper)
+        public CategoriesController(ICategoryRepository catagoryRepository, IMapper mapper)
         {
             _catagoryRepository = catagoryRepository;
             _mapper = mapper;
         }
 
-        // GET: api/Catagories
+        // GET: api/Categories
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -40,7 +40,7 @@ namespace SweetIncApi.Controllers
             }
         }
 
-        // GET: api/Catagories/5
+        // GET: api/Categories/5
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
         {
@@ -54,19 +54,19 @@ namespace SweetIncApi.Controllers
             return Ok(catagory);
         }
 
-        // PUT: api/Catagories/5
+        // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateCatagoryVM updateCatagory)
+        public IActionResult Update(int id, UpdateCategoryVM updateCategory)
         {
-            if (id != updateCatagory.Id)
+            if (id != updateCategory.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                var catagory = _mapper.Map<Catagory>(updateCatagory);
+                var catagory = _mapper.Map<Category>(updateCategory);
                 var result = _catagoryRepository.Update(catagory);
                 if (result != null)
                 {
@@ -83,17 +83,17 @@ namespace SweetIncApi.Controllers
             }
         }
 
-        // POST: api/Catagories
+        // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public IActionResult Add(CatagoryVM catagoryVM)
+        public IActionResult Add(CategoryVM catagoryVM)
         {
-            var catagory = _mapper.Map<Catagory>(catagoryVM);
+            var catagory = _mapper.Map<Category>(catagoryVM);
                 _catagoryRepository.Add(catagory);
             return Ok(catagory);
         }
 
-        // DELETE: api/Catagories/5
+        // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

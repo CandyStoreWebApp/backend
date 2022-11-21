@@ -6,24 +6,24 @@ using System.Linq;
 
 namespace SweetIncApi.Repository
 {
-    public class CatagoryRepository : BaseRepository<Catagory>, ICatagoryRepository
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
-        public CatagoryRepository(CandyStoreContext context) : base(context)
+        public CategoryRepository(CandyStoreContext context) : base(context)
         {
         }
 
-        public new List<Catagory> GetAll()
+        public new List<Category> GetAll()
         {
-            return _context.Set<Catagory>()
+            return _context.Set<Category>()
                 .Include(x => x.Products)
                 .AsNoTracking()
                 .ToList();
 
         }
 
-        public new Catagory GetByPrimaryKey(int id)
+        public new Category GetByPrimaryKey(int id)
         {
-            var catagory = _context.Catagories
+            var catagory = _context.Categories
                 .Include(x => x.Products)
                 .AsNoTracking()
                 .ToList()
@@ -31,19 +31,19 @@ namespace SweetIncApi.Repository
             return catagory;
         }
 
-        public new Catagory Update(Catagory entity)
+        public new Category Update(Category entity)
         {
-            var catagory = _context.Set<Catagory>()
+            var catagory = _context.Set<Category>()
                 .Update(entity).Entity;
             _context.SaveChanges();
 
-            var returnCatagory = GetByPrimaryKey(catagory.Id);
-            return returnCatagory;
+            var returnCategory = GetByPrimaryKey(catagory.Id);
+            return returnCategory;
         }
 
-        public new Catagory Add(Catagory entity)
+        public new Category Add(Category entity)
         {
-            var catagory = _context.Set<Catagory>()
+            var catagory = _context.Set<Category>()
                 .Add(entity).Entity;
             _context.SaveChanges();
 

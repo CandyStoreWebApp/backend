@@ -21,10 +21,11 @@ namespace SweetIncApi.BusinessModels
         public virtual DbSet<BoxPattern> BoxPatterns { get; set; }
         public virtual DbSet<BoxProduct> BoxProducts { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
-        public virtual DbSet<Catagory> Catagories { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Orderdetail> Orderdetails { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Origin> Origins { get; set; }
+        public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -54,7 +55,10 @@ namespace SweetIncApi.BusinessModels
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-                entity.Property(e => e.Status).HasColumnName("status");
+                entity.Property(e => e.Status)
+                    .IsRequired()
+                    .HasColumnName("status")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.UpperAge).HasColumnName("upperAge");
 
@@ -75,6 +79,8 @@ namespace SweetIncApi.BusinessModels
                     .HasMaxLength(500)
                     .HasColumnName("image");
 
+                entity.Property(e => e.LowerAge).HasColumnName("lowerAge");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100)
@@ -88,6 +94,8 @@ namespace SweetIncApi.BusinessModels
                     .IsRequired()
                     .HasColumnName("status")
                     .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.UpperAge).HasColumnName("upperAge");
             });
 
             modelBuilder.Entity<BoxProduct>(entity =>
@@ -99,6 +107,14 @@ namespace SweetIncApi.BusinessModels
                 entity.Property(e => e.BoxId).HasColumnName("boxId");
 
                 entity.Property(e => e.ProductId).HasColumnName("productId");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.ProductName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("productName")
+                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
@@ -126,18 +142,18 @@ namespace SweetIncApi.BusinessModels
                     .HasMaxLength(50)
                     .HasColumnName("name");
 
-                entity.Property(e => e.Originid).HasColumnName("originid");
+                entity.Property(e => e.OriginId).HasColumnName("originId");
 
                 entity.HasOne(d => d.Origin)
                     .WithMany(p => p.Brands)
-                    .HasForeignKey(d => d.Originid)
+                    .HasForeignKey(d => d.OriginId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Brand_origin");
             });
 
-            modelBuilder.Entity<Catagory>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
-                entity.ToTable("Catagory");
+                entity.ToTable("Category");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -156,28 +172,36 @@ namespace SweetIncApi.BusinessModels
                     .HasColumnType("datetime")
                     .HasColumnName("datetime");
 
+                entity.Property(e => e.PaymentId).HasColumnName("paymentId");
+
                 entity.Property(e => e.Status)
                     .HasColumnName("status")
                     .HasDefaultValueSql("('0')");
 
-                entity.Property(e => e.Userid).HasColumnName("userid");
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.PaymentId)
+                    .HasConstraintName("FK__Order__paymentId__43A1090D");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.Userid)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_User");
             });
 
-            modelBuilder.Entity<Orderdetail>(entity =>
+            modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.Boxid });
+                entity.HasKey(e => new { e.OrderId, e.BoxId })
+                    .HasName("PK_Orderdetail");
 
-                entity.ToTable("Orderdetail");
+                entity.ToTable("OrderDetail");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.OrderId).HasColumnName("orderId");
 
-                entity.Property(e => e.Boxid).HasColumnName("boxid");
+                entity.Property(e => e.BoxId).HasColumnName("boxId");
 
                 entity.Property(e => e.Price)
                     .HasColumnType("money")
@@ -186,14 +210,14 @@ namespace SweetIncApi.BusinessModels
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.HasOne(d => d.Box)
-                    .WithMany(p => p.Orderdetails)
-                    .HasForeignKey(d => d.Boxid)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.BoxId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orderdetail_Box");
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.Orderdetails)
-                    .HasForeignKey(d => d.Id)
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orderdetail_Order");
             });
@@ -210,6 +234,24 @@ namespace SweetIncApi.BusinessModels
                     .HasColumnName("name");
             });
 
+            modelBuilder.Entity<PaymentDetail>(entity =>
+            {
+                entity.ToTable("PaymentDetail");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Provider)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnName("provider");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(100)
+                    .HasColumnName("status");
+            });
+
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.ToTable("Product");
@@ -218,7 +260,7 @@ namespace SweetIncApi.BusinessModels
 
                 entity.Property(e => e.BrandId).HasColumnName("brandId");
 
-                entity.Property(e => e.CatagoryId).HasColumnName("catagoryId");
+                entity.Property(e => e.CategoryId).HasColumnName("categoryId");
 
                 entity.Property(e => e.Image)
                     .IsRequired()
@@ -243,9 +285,9 @@ namespace SweetIncApi.BusinessModels
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_Brand");
 
-                entity.HasOne(d => d.Catagory)
+                entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.CatagoryId)
+                    .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Product_Catagory");
             });
@@ -256,9 +298,9 @@ namespace SweetIncApi.BusinessModels
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Role1)
+                entity.Property(e => e.Name)
                     .HasMaxLength(50)
-                    .HasColumnName("role");
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -279,7 +321,7 @@ namespace SweetIncApi.BusinessModels
                     .HasMaxLength(50)
                     .HasColumnName("password");
 
-                entity.Property(e => e.Roleid).HasColumnName("roleid");
+                entity.Property(e => e.RoleId).HasColumnName("roleId");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 
@@ -289,7 +331,7 @@ namespace SweetIncApi.BusinessModels
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.Roleid)
+                    .HasForeignKey(d => d.RoleId)
                     .HasConstraintName("FK_User_Role");
             });
 

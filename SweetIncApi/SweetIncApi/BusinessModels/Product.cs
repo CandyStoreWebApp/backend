@@ -18,11 +18,11 @@ namespace SweetIncApi.BusinessModels
         public decimal? Price { get; set; }
         public bool? Status { get; set; }
         public string Image { get; set; }
-        public int CatagoryId { get; set; }
+        public int CategoryId { get; set; }
         public int BrandId { get; set; }
 
         public virtual Brand Brand { get; set; }
-        public virtual Catagory Catagory { get; set; }
+        public virtual Category Category { get; set; }
         public virtual ICollection<BoxProduct> BoxProducts { get; set; }
     }
 }

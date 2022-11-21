@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace SweetIncApi.BusinessModels
 {
-    public partial class Catagory
+    public partial class Category
     {
-        public Catagory()
+        public Category()
         {
             Products = new HashSet<Product>();
         }

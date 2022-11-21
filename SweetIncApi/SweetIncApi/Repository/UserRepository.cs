@@ -36,7 +36,7 @@ namespace SweetIncApi.Repository
 
             var loginInfo = new UserLoginResponse
             {
-                Scope = user.Role.Role1,
+                Scope = user.Role.Name,
                 UserInfo = userForLogin,
             };
                         

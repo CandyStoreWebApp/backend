@@ -106,7 +106,7 @@ namespace SweetIncApi.Repository
                 .ThenInclude(x => x.Brand)
                 .ThenInclude(x => x.Origin)
                 .Include(x => x.Product)
-                .ThenInclude(x => x.Catagory)
+                .ThenInclude(x => x.Category)
                 .AsNoTracking()
                 .ToList()
                 .FirstOrDefault(x => x.BoxId == boxId && x.ProductId == productId);

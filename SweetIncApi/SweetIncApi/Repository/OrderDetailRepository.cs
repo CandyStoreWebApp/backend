@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace SweetIncApi.Repository
 {
-    public class OrderDetailRepository : BaseRepository<Orderdetail>, IOrderDetailRepository
+    public class OrderDetailRepository : BaseRepository<OrderDetail>, IOrderDetailRepository
     {
         private readonly CandyStoreContext _context;
 
@@ -19,50 +19,50 @@ namespace SweetIncApi.Repository
         {
             _context = context;
         }
-        public List<Orderdetail> GetByOrderId(int id)
+        public List<OrderDetail> GetByOrderId(int id)
         {
-            var orderedItems = _context.Orderdetails
-                .Where(e => e.Id == id)
+            var orderedItems = _context.OrderDetails
+                .Where(e => e.OrderId == id)
                 .Include(e => e.Box)
                 .ToList();
 
             return orderedItems;
         }
 
-        public new List<Orderdetail> GetAll()
+        public new List<OrderDetail> GetAll()
         {
-            return _context.Set<Orderdetail>()
+            return _context.Set<OrderDetail>()
                 .Include(x => x.Box)
-                .Include(x => x.IdNavigation)
+                .Include(x => x.Order)
                 .AsNoTracking()
                 .ToList();
         }
 
-        public new Orderdetail GetByPrimaryKey(int orderId, int boxId)
+        public new OrderDetail GetByPrimaryKey(int orderId, int boxId)
         {
-            var orderDetail = _context.Orderdetails
-                .Include(x => x.IdNavigation)
+            var orderDetail = _context.OrderDetails
+                .Include(x => x.Order)
                 .Include(x => x.Box)
                 .AsNoTracking()
                 .ToList()
-                .FirstOrDefault(x => x.Id == orderId && x.Boxid == boxId);
+                .FirstOrDefault(x => x.OrderId == orderId && x.BoxId == boxId);
             return orderDetail;
 
         }
 
-        public new Orderdetail Update(Orderdetail entity)
+        public new OrderDetail Update(OrderDetail entity)
         {
-            var orderDetail = _context.Set<Orderdetail>()
+            var orderDetail = _context.Set<OrderDetail>()
                 .Update(entity).Entity;
             _context.SaveChanges();
 
-            var returnOrderDetail = GetByPrimaryKey(orderDetail.Id, orderDetail.Boxid);
+            var returnOrderDetail = GetByPrimaryKey(orderDetail.OrderId, orderDetail.BoxId);
             return returnOrderDetail;
         }
 
-        public new Orderdetail Add(Orderdetail entity)
+        public new OrderDetail Add(OrderDetail entity)
         {
-            var orderDetail = _context.Set<Orderdetail>()
+            var orderDetail = _context.Set<OrderDetail>()
                 .Add(entity).Entity;
             _context.SaveChanges();
 
@@ -70,7 +70,7 @@ namespace SweetIncApi.Repository
                 .Reference(x => x.Box)
                 .Load();
             _context.Entry(orderDetail)
-                .Reference(x => x.IdNavigation)
+                .Reference(x => x.Order)
                 .Load();
             return orderDetail;
         }

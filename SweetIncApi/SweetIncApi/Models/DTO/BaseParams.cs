@@ -1,4 +1,4 @@
-﻿namespace SweetIncApi.Params
+﻿namespace SweetIncApi.Models.DTO
 {
     public class BaseParams
     {
@@ -12,7 +12,6 @@
         public int PageNumber { get; set; } = 1;
         public int SortField { get; set; }
         public bool IsAscending { get; set; }
-        public string Keyword { get; set; }
 
     }
 }

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SweetIncApi.BusinessModels
 {
-    public partial class CandyStoreContext : DbContext
+    public partial class CandyStore2Context : DbContext
     {
-        public CandyStoreContext()
+        public CandyStore2Context()
         {
         }
 
-        public CandyStoreContext(DbContextOptions<CandyStoreContext> options)
+        public CandyStore2Context(DbContextOptions<CandyStore2Context> options)
             : base(options)
         {
         }
@@ -179,7 +179,7 @@ namespace SweetIncApi.BusinessModels
                 entity.HasOne(d => d.Payment)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.PaymentId)
-                    .HasConstraintName("FK__Order__paymentId__43A1090D");
+                    .HasConstraintName("FK__Order__paymentId__4316F928");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)

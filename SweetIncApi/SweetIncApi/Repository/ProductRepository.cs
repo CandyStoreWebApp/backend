@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkPaginateCore;
+using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
 using SweetIncApi.RepositoryInterface;
 using System.Collections.Generic;
@@ -6,22 +7,28 @@ using System.Linq;
 
 namespace SweetIncApi.Repository
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    public class ProductRepository : BaseRepository<PaymentDetail>, IProductRepository
     {
         private readonly CandyStoreContext _context;
 
         public ProductRepository(CandyStoreContext context) :base(context)
         {
+            _context = context;
         }
 
-        public new List<Product> GetAll()
+        public new Page<Product> GetAll()
         {
-            return _context.Set<Product>()
-                .Include(x => x.Brand)
-                .Include(x => x.BoxProducts)
-                .Include(x => x.Category)
-                .AsNoTracking()
-                .ToList();
+            var filters = new Filters<Product>();
+            filters.Add(true, x => x.Name.Contains("a"));
+
+            var sorts = new Sorts<Product>();
+            sorts.Add(true, x => x.Price);
+
+            var list = _context.Products
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(1, 5, sorts, filters);
+            return sortedList;
         }
 
         public new Product GetByPrimaryKey(int id)
@@ -34,7 +41,6 @@ namespace SweetIncApi.Repository
                 .ToList()
                 .FirstOrDefault(x => x.Id == id);
             return product;
-
         }
 
         public new Product Update(Product entity)

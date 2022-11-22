@@ -8,6 +8,7 @@ using SweetIncApi.Models.DTO.Category;
 using SweetIncApi.Models.DTO.Order;
 using SweetIncApi.Models.DTO.OrderDetail;
 using SweetIncApi.Models.DTO.Origin;
+using SweetIncApi.Models.DTO.PaymentDetail;
 using SweetIncApi.Models.DTO.Product;
 using SweetIncApi.Models.DTO.Role;
 using SweetIncApi.Models.DTO.User;
@@ -26,6 +27,7 @@ namespace SweetIncApi.Models
             CreateOrderMap();
             CreateOrderDetailMap();
             CreateOriginMap();
+            CreatePaymentDetailMap();
             CreateProductMap();
             CreateRoleMap();
             CreateUserMap();
@@ -69,10 +71,15 @@ namespace SweetIncApi.Models
             CreateMap<OriginVM, Origin>().ReverseMap();
             CreateMap<UpdateOriginVM, Origin>().ReverseMap();
         }
+        private void CreatePaymentDetailMap()
+        {
+            CreateMap<PaymentDetailVM, PaymentDetail>().ReverseMap();
+            CreateMap<UpdatePaymentDetailVM, PaymentDetail>().ReverseMap();
+        }
         private void CreateProductMap()
         {
-            CreateMap<ProductVM, Product>().ReverseMap();
-            CreateMap<UpdateProductVM, Product>().ReverseMap();
+            CreateMap<ProductVM, PaymentDetail>().ReverseMap();
+            CreateMap<UpdateProductVM, PaymentDetail>().ReverseMap();
         }
         private void CreateRoleMap()
         {

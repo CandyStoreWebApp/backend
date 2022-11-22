@@ -46,7 +46,6 @@ namespace SweetIncApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SweetIncApi", Version = "v1" });
             });
-            //var connectionString = $"Server=sweetincapidbserver.database.windows.net,1433;User Id=buigiaan@sweetincapidbserver;" +                $"Password=An29122001;Database=SweetIncApi_db;";
             var connectionString = "Server=(local);Database=CandyStore;Trusted_Connection=True;";
             services.AddDbContext<CandyStoreContext>(option =>
             {

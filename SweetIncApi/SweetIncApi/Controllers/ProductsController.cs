@@ -61,7 +61,7 @@ namespace SweetIncApi.Controllers
 
             try
             {
-                var product = _mapper.Map<Product>(updateProduct);
+                var product = _mapper.Map<PaymentDetail>(updateProduct);
                 var result = _productRepository.Update(product);
                 if (result != null)
                 {
@@ -81,7 +81,7 @@ namespace SweetIncApi.Controllers
         [HttpPost]
         public IActionResult Add(ProductVM productVM)
         {
-            var product = _mapper.Map<Product>(productVM);
+            var product = _mapper.Map<PaymentDetail>(productVM);
             _productRepository.Add(product);
             return Ok(product);
         }

@@ -1,6 +1,6 @@
-﻿namespace SweetIncApi.Models.DTO.Origin
+﻿namespace SweetIncApi.Models.DTO.Category
 {
-    public class UpdateOriginVM
+    public class CategoryUpdateVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

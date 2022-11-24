@@ -39,6 +39,19 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(BrandPagingVM queries)
+        {
+            try
+            {
+                return Ok(_brandRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
         {
@@ -53,7 +66,7 @@ namespace SweetIncApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateBrandVM updateBrand)
+        public IActionResult Update(int id, BrandUpdateVM updateBrand)
         {
             if (id != updateBrand.Id)
             {

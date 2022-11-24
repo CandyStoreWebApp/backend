@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace SweetIncApi.Models.DTO.Order
 {
-    public class OrderParams : BaseParams
+    public class OrderPagingVM : BasePagingVM
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public DateTime? DatetimeMin { get; set; }
         public DateTime? DatetimeMax { get; set; }

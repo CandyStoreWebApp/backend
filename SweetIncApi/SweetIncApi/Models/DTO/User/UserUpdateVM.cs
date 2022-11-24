@@ -1,6 +1,6 @@
 ﻿namespace SweetIncApi.Models.DTO.User
 {
-    public class UpdateUserVM
+    public class UserUpdateVM
     {
         public int Id { get; set; }
         public string Email { get; set; }

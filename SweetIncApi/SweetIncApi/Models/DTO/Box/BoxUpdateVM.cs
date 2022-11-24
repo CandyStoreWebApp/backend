@@ -1,6 +1,6 @@
 ﻿namespace SweetIncApi.Models.DTO.Box
 {
-    public class UpdateBoxVM
+    public class BoxUpdateVM
     {
         public int Id { get; set; }
         public int? Quantity { get; set; }

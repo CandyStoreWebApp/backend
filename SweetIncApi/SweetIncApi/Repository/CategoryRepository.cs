@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkPaginateCore;
+using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.Brand;
+using SweetIncApi.Models.DTO.Category;
 using SweetIncApi.RepositoryInterface;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +15,37 @@ namespace SweetIncApi.Repository
         {
         }
 
-        public new List<Category> GetAll()
+        private readonly int _SortName = 1;
+        private readonly int _SortOriginId = 1;
+        public new Page<Category> GetAll(CategoryPagingVM queries)
         {
-            return _context.Set<Category>()
-                .Include(x => x.Products)
-                .AsNoTracking()
-                .ToList();
+            #region filters
+            var filters = new Filters<Category>();
+            filters.Add(!string.IsNullOrEmpty(queries.Name), x => x.Name.Contains(queries.Name));
+            #endregion
 
+            #region sorts
+            var sorts = new Sorts<Category>();
+            sorts.Add(queries.SortField == _SortName,
+                x => x.Name, queries.IsDescending);
+            #endregion
+
+            var list = _context.Set<Category>()
+                .Include(x => x.Products)
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(queries.PageNumber, queries.PageSize, sorts, filters);
+            return sortedList;
+        }
+
+        public new Page<Category> GetAll()
+        {
+            var list = _context.Set<Category>()
+                .Include(x => x.Products)
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(1, list.Count());
+            return sortedList;
         }
 
         public new Category GetByPrimaryKey(int id)

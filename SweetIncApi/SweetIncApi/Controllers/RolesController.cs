@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
 using SweetIncApi.Models.DTO.Role;
+using SweetIncApi.Models.DTO.User;
 using SweetIncApi.Repository;
 using SweetIncApi.RepositoryInterface;
 
@@ -40,6 +41,18 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(RolePagingVM queries)
+        {
+            try
+            {
+                return Ok(_roleRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
         // GET: api/Roles/5
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
@@ -57,7 +70,7 @@ namespace SweetIncApi.Controllers
         // PUT: api/Roles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateRoleVM updateRole)
+        public IActionResult Update(int id, RoleUpdateVM updateRole)
         {
             if (id != updateRole.Id)
             {

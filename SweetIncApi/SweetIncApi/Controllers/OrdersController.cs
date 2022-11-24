@@ -40,6 +40,19 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(OrderPagingVM queries)
+        {
+            try
+            {
+                return Ok(_orderRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
@@ -57,7 +70,7 @@ namespace SweetIncApi.Controllers
         // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateOrderVM updateOrder)
+        public IActionResult Update(int id, OrderUpdateVM updateOrder)
         {
             if (id != updateOrder.Id)
             {

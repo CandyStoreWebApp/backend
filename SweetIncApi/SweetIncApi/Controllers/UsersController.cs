@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.Product;
 using SweetIncApi.Models.DTO.User;
+using SweetIncApi.Repository;
 using SweetIncApi.RepositoryInterface;
 
 namespace SweetIncApi.Controllers
@@ -41,6 +43,19 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(UserPagingVM queries)
+        {
+            try
+            {
+                return Ok(_userRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         // GET: api/Users/5
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
@@ -58,7 +73,7 @@ namespace SweetIncApi.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateUserVM updateUser)
+        public IActionResult Update(int id, UserUpdateVM updateUser)
         {
             if (id != updateUser.Id)
             {

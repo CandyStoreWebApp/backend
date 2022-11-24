@@ -1,6 +1,6 @@
 ﻿namespace SweetIncApi.Models.DTO.BoxPattern
 {
-    public class UpdateBoxPatternVM
+    public class BoxPatternUpdateVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,4 +1,6 @@
-﻿using SweetIncApi.BusinessModels;
+﻿using EntityFrameworkPaginateCore;
+using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.BoxPattern;
 using SweetIncApi.Models.DTO.User;
 using System.Threading.Tasks;
 
@@ -8,5 +10,7 @@ namespace SweetIncApi.RepositoryInterface
     {
         public User Register(UserVM userForCreate);
         public Task<string> LoginAsync(UserForLogin userForLogin);
+        public Page<User> GetAll();
+        public Page<User> GetAll(UserPagingVM queries);
     }
 }

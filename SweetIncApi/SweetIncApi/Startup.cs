@@ -46,7 +46,7 @@ namespace SweetIncApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SweetIncApi", Version = "v1" });
             });
-            var connectionString = "Server=(local);Database=CandyStore2;Trusted_Connection=True;";
+            var connectionString = "Server=(local);Database=CandyStore;Trusted_Connection=True;";
             services.AddDbContext<CandyStoreContext>(option =>
             {
                 option.UseSqlServer(connectionString);
@@ -61,6 +61,7 @@ namespace SweetIncApi
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOriginRepository, OriginRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             #endregion

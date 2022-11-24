@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace SweetIncApi.Models.DTO.Brand
 {
-    public class BrandParams : BaseParams
+    public class BrandPagingVM : BasePagingVM
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int OriginId { get; set; }
     }

@@ -38,6 +38,19 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(ProductPagingVM queries)
+        {
+            try
+            {
+                return Ok(_productRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
         {
@@ -52,7 +65,7 @@ namespace SweetIncApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateProductVM updateProduct)
+        public IActionResult Update(int id, ProductUpdateVM updateProduct)
         {
             if (id != updateProduct.Id)
             {
@@ -85,8 +98,7 @@ namespace SweetIncApi.Controllers
             _productRepository.Add(product);
             return Ok(product);
         }
-
-
+        
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

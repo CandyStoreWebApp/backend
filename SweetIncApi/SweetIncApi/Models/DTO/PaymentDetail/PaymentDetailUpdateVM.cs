@@ -1,6 +1,6 @@
 ﻿namespace SweetIncApi.Models.DTO.PaymentDetail
 {
-    public class UpdatePaymentDetailVM
+    public class PaymentDetailUpdateVM
     {
         public int Id { get; set; }
         public string Provider { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SweetIncApi.Models.DTO.OrderDetail
 {
-    public class OrderDetailParams
+    public class OrderDetailPaging : BasePagingVM
     {
         public int OrderId { get; set; }
         public int BoxId { get; set; }

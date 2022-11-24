@@ -25,8 +25,7 @@ namespace SweetIncApi.Controllers
             _catagoryRepository = catagoryRepository;
             _mapper = mapper;
         }
-
-        // GET: api/Categories
+                
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -40,6 +39,18 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(CategoryPagingVM queries)
+        {
+            try
+            {
+                return Ok(_catagoryRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
@@ -57,7 +68,7 @@ namespace SweetIncApi.Controllers
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateCategoryVM updateCategory)
+        public IActionResult Update(int id, CategoryUpdateVM updateCategory)
         {
             if (id != updateCategory.Id)
             {

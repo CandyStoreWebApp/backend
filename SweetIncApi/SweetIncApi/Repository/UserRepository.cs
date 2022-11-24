@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using EntityFrameworkPaginateCore;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.BoxPattern;
 using SweetIncApi.Models.DTO.User;
 using SweetIncApi.Models.Responses;
 using SweetIncApi.RepositoryInterface;
@@ -57,14 +59,50 @@ namespace SweetIncApi.Repository
             this.Add(user);
             return user;
         }
-
-        public new List<User> GetAll()
+                
+        public new Page<User> GetAll()
         {
-            return _context.Set<User>()
+            var list = _context.Set<User>()
                 .Include(x => x.Role)
                 .Include(x => x.Orders)
-                .AsNoTracking()
-                .ToList();
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(1, list.Count());
+            return sortedList;
+        }
+
+        private readonly int _SortEmail = 1;
+        private readonly int _SortUsername = 2;
+        private readonly int _SortRoleId = 3;
+        public Page<User> GetAll(UserPagingVM queries)
+        {
+            #region filters
+            var filters = new Filters<User>();
+            filters.Add(!string.IsNullOrEmpty(queries.Email),
+                x => x.Email.Contains(queries.Email));
+            filters.Add(!string.IsNullOrEmpty(queries.Username),
+                x => x.Username.Contains(queries.Username));
+            filters.Add(queries.RoleId > 0,
+                x => x.RoleId == queries.RoleId);
+            #endregion
+
+            #region sorts
+            var sorts = new Sorts<User>();
+            sorts.Add(queries.SortField == _SortEmail,
+                x => x.Email, queries.IsDescending);
+            sorts.Add(queries.SortField == _SortUsername,
+                x => x.Username, queries.IsDescending);
+            sorts.Add(queries.SortField == _SortRoleId,
+                x => x.RoleId, queries.IsDescending);
+            #endregion
+
+            var list = _context.Set<User>()
+                .Include(x => x.Role)
+                .Include(x => x.Orders)
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(queries.PageNumber, queries.PageSize, sorts, filters);
+            return sortedList;
         }
 
         public new User GetByPrimaryKey(int id)

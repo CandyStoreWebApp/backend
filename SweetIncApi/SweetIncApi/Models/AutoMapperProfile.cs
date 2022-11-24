@@ -36,12 +36,12 @@ namespace SweetIncApi.Models
         private void CreateBoxMap()
         {
             CreateMap<BoxVM, Box>().ReverseMap();
-            CreateMap<UpdateBoxVM, Box>().ReverseMap();
+            CreateMap<BoxUpdateVM, Box>().ReverseMap();
         }
         private void CreateBoxPatternMap()
         {
             CreateMap<BoxPatternVM, BoxPattern>().ReverseMap();
-            CreateMap<UpdateBoxPatternVM, BoxPattern>().ReverseMap();
+            CreateMap<BoxPatternUpdateVM, BoxPattern>().ReverseMap();
         }
         private void CreateBoxProductMap()
         {
@@ -50,17 +50,17 @@ namespace SweetIncApi.Models
         private void CreateBrandMap()
         {
             CreateMap<BrandVM, Brand>().ReverseMap();
-            CreateMap<UpdateBrandVM, Brand>().ReverseMap();
+            CreateMap<BrandUpdateVM, Brand>().ReverseMap();
         }
         private void CreateCategoryMap()
         {
             CreateMap<CategoryVM, Category>().ReverseMap();
-            CreateMap<UpdateCategoryVM, Category>().ReverseMap();
+            CreateMap<CategoryUpdateVM, Category>().ReverseMap();
         }
         private void CreateOrderMap()
         {
             CreateMap<OrderVM, Order>().ReverseMap();
-            CreateMap<UpdateOrderVM, Order>().ReverseMap();
+            CreateMap<OrderUpdateVM, Order>().ReverseMap();
         }
         private void CreateOrderDetailMap()
         {
@@ -69,27 +69,27 @@ namespace SweetIncApi.Models
         private void CreateOriginMap()
         {
             CreateMap<OriginVM, Origin>().ReverseMap();
-            CreateMap<UpdateOriginVM, Origin>().ReverseMap();
+            CreateMap<OriginUpdateVM, Origin>().ReverseMap();
         }
         private void CreatePaymentDetailMap()
         {
             CreateMap<PaymentDetailVM, PaymentDetail>().ReverseMap();
-            CreateMap<UpdatePaymentDetailVM, PaymentDetail>().ReverseMap();
+            CreateMap<PaymentDetailUpdateVM, PaymentDetail>().ReverseMap();
         }
         private void CreateProductMap()
         {
             CreateMap<ProductVM, PaymentDetail>().ReverseMap();
-            CreateMap<UpdateProductVM, PaymentDetail>().ReverseMap();
+            CreateMap<ProductUpdateVM, PaymentDetail>().ReverseMap();
         }
         private void CreateRoleMap()
         {
             CreateMap<RoleVM, Role>().ReverseMap();
-            CreateMap<UpdateRoleVM, Role>().ReverseMap();
+            CreateMap<RoleUpdateVM, Role>().ReverseMap();
         }
         private void CreateUserMap()
         {
             CreateMap<UserVM, User>().ReverseMap();
-            CreateMap<UpdateUserVM, User>().ReverseMap();
+            CreateMap<UserUpdateVM, User>().ReverseMap();
             CreateMap<UserForLogin, User>().ReverseMap();
         } 
     }

@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace SweetIncApi.Models.DTO.Category
 {
-    public class CategoryParams
+    public class CategoryPagingVM : BasePagingVM
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

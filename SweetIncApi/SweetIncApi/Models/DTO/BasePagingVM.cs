@@ -1,6 +1,6 @@
 ﻿namespace SweetIncApi.Models.DTO
 {
-    public class BaseParams
+    public class BasePagingVM
     {
         private readonly int MaxPageSize = 50;
         private int _pageSize = 10;
@@ -10,8 +10,8 @@
             set { _pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
         public int PageNumber { get; set; } = 1;
-        public int SortField { get; set; }
-        public bool IsAscending { get; set; }
+        public int SortField { get; set; } = 1;
+        public bool IsDescending { get; set; } = false;
 
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.Box;
 using SweetIncApi.Models.DTO.BoxPattern;
 using SweetIncApi.Repository;
 using SweetIncApi.RepositoryInterface;
@@ -40,6 +41,19 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(BoxPatternPagingVM queries)
+        {
+            try
+            {
+                return Ok(_boxPatternRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         // GET: api/BoxPatterns/5
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
@@ -57,7 +71,7 @@ namespace SweetIncApi.Controllers
         // PUT: api/BoxPatterns/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateBoxPatternVM boxPatternVM)
+        public IActionResult Update(int id, BoxPatternUpdateVM boxPatternVM)
         {
             if (id != boxPatternVM.Id)
             {

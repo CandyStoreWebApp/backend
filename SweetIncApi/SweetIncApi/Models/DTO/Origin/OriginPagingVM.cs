@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace SweetIncApi.Models.DTO.Origin
 {
-    public class OriginParams
+    public class OriginPagingVM : BasePagingVM
     {
+        public string Name { get; set; }
     }
 }

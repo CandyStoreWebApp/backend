@@ -1,6 +1,8 @@
 ﻿using EntityFrameworkPaginateCore;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.Product;
 using SweetIncApi.RepositoryInterface;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +18,62 @@ namespace SweetIncApi.Repository
             _context = context;
         }
 
-        public new Page<Product> GetAll()
+        private readonly int _SortId = 1;
+        private readonly int _SortName = 2;
+        private readonly int _SortBrand = 3;
+        private readonly int _SortCategory = 4;
+        public new Page<Product> GetAll(ProductPagingVM queries)
         {
+            #region filters
             var filters = new Filters<Product>();
-            filters.Add(true, x => x.Name.Contains("a"));
+            filters.Add(!string.IsNullOrEmpty(queries.Name), x => x.Name.Contains(queries.Name));
+            filters.Add(queries.QuantityMin >= 0, 
+                x => x.Quantity >= queries.QuantityMin);
+            filters.Add(queries.QuantityMax > 0, 
+                x => x.Quantity <= queries.QuantityMax);
+            filters.Add(queries.PriceMin >= 0, 
+                x => x.Price >= queries.PriceMin);
+            filters.Add(queries.PriceMax > 0, 
+                x => x.Price <= queries.PriceMax);
+            filters.Add(queries.Status != null, 
+                x => x.Status == queries.Status);
+            filters.Add(queries.CategoryId > 0, 
+                x => x.CategoryId == queries.CategoryId);
+            filters.Add(queries.BrandId > 0, 
+                x => x.BrandId == queries.BrandId);
+            #endregion
 
-            var sorts = new Sorts<Product>();
-            sorts.Add(true, x => x.Price);
+            #region sorts
+            var sorts = new Sorts<Product>();            
+            sorts.Add(queries.SortField == _SortId, 
+                x => x.Id, queries.IsDescending);
+            sorts.Add(queries.SortField == _SortName, 
+                x => x.Name, queries.IsDescending);
+            sorts.Add(queries.SortField == _SortBrand,
+                x => x.BrandId, queries.IsDescending);
+            sorts.Add(queries.SortField == _SortCategory,
+                x => x.CategoryId, queries.IsDescending);
+            #endregion
 
             var list = _context.Products
+                .Include(x => x.BoxProducts)
+                .Include(x => x.Brand)
+                .Include(x => x.Category)
                 .AsNoTracking();
             var sortedList = list
-                .Paginate(1, 5, sorts, filters);
+                .Paginate(queries.PageNumber, queries.PageSize, sorts, filters);
+            return sortedList;
+        }
+
+        public new Page<Product> GetAll()
+        {
+            var list = _context.Products
+                .Include(x => x.BoxProducts)
+                .Include(x => x.Brand)
+                .Include(x => x.Category)
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(1, list.Count());
             return sortedList;
         }
 

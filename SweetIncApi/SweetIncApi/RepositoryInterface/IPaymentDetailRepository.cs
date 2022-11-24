@@ -2,7 +2,7 @@
 
 namespace SweetIncApi.RepositoryInterface
 {
-    public interface ICategoryRepository : IBaseRepository<Category>
+    public interface IPaymentDetailRepository : IBaseRepository<PaymentDetail>
     {
     }
 }

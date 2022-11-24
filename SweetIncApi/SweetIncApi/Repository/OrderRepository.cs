@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EntityFrameworkPaginateCore;
+using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
+using SweetIncApi.Models.DTO.Brand;
+using SweetIncApi.Models.DTO.Order;
 using SweetIncApi.RepositoryInterface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,15 +16,44 @@ namespace SweetIncApi.Repository
         {
         }
 
-        public new List<Order> GetAll()
+        private readonly int _SortUserId = 1;
+        public new Page<Order> GetAll(OrderPagingVM queries)
         {
-            return _context.Set<Order>()
+            #region filters
+            var filters = new Filters<Order>();
+            filters.Add(queries.DatetimeMin != null, 
+                x => x.Datetime >= queries.DatetimeMin);
+            filters.Add(queries.DatetimeMax != null,
+                x => x.Datetime <= queries.DatetimeMax);
+            filters.Add(queries.PaymentId != 0,
+                x => x.PaymentId == queries.PaymentId);
+            #endregion
+
+            #region sorts
+            var sorts = new Sorts<Order>();
+            sorts.Add(queries.SortField == _SortUserId,
+                x => x.UserId, queries.IsDescending);            
+            #endregion
+
+            var list = _context.Set<Order>()
                 .Include(x => x.OrderDetails)
                 .Include(x => x.User)
-                .AsNoTracking()
-                .ToList();
-
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(queries.PageNumber, queries.PageSize, sorts, filters);
+            return sortedList;
         }
+
+        public new Page<Order> GetAll()
+        {
+            var list = _context.Set<Order>()
+                .Include(x => x.OrderDetails)
+                .Include(x => x.User)
+                .AsNoTracking();
+            var sortedList = list
+                .Paginate(1, list.Count());
+            return sortedList;
+        }        
 
         public new Order GetByPrimaryKey(int id)
         {

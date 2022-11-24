@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SweetIncApi.Models.DTO.BoxProduct
 {
-    public class BoxProductParams : BaseParams
+    public class BoxProductPagingVM : BasePagingVM
     {
         public int BoxId { get; set; }
         public int QuantityMin { get; set; }

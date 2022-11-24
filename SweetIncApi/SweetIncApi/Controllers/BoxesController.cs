@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using SweetIncApi.BusinessModels;
 using SweetIncApi.Models;
 using SweetIncApi.Models.DTO.Box;
+using SweetIncApi.Models.DTO.Product;
+using SweetIncApi.Repository;
 using SweetIncApi.RepositoryInterface;
 
 namespace SweetIncApi.Controllers
@@ -39,6 +41,19 @@ namespace SweetIncApi.Controllers
             }
         }
 
+        [HttpPost("with_query")]
+        public IActionResult GetAll(BoxPagingVM queries)
+        {
+            try
+            {
+                return Ok(_boxRepository.GetAll(queries));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetByPrimaryKey(int id)
         {
@@ -53,7 +68,7 @@ namespace SweetIncApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateBoxVM boxVM)
+        public IActionResult Update(int id, BoxUpdateVM boxVM)
         {
             var box = _mapper.Map<Box>(boxVM);
 
